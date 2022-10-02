@@ -20,11 +20,11 @@ const main = async () => {
   }
 
   if (!config.ShadowRouter[networkName] || config.ShadowRouter[networkName] === ethers.constants.AddressZero) {
-    throw new Error("Missing router address, refer to README 'Deployment' section");
+    throw new Error("Missing shadowrouter address, refer to README 'Deployment' section");
   }
 
   if (!config.WCORE[networkName] || config.WCORE[networkName] === ethers.constants.AddressZero) {
-    throw new Error("Missing WBNB address, refer to README 'Deployment' section");
+    throw new Error("Missing WCORE address, refer to README 'Deployment' section");
   }
 
   console.log("Deploying to network:", networkName);
