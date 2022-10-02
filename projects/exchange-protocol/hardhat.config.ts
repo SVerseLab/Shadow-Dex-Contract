@@ -15,18 +15,11 @@ const CoreTestnet: NetworkUserConfig = {
   accounts: [`0x${KEY_TESTNET}`],
 };
 
-// const bscMainnet: NetworkUserConfig = {
-//   url: "https://bsc-dataseed.binance.org/",
-//   chainId: 56,
-//   accounts: [`0x${KEY_MAINNET}`],
-// };
-
 const config: HardhatUserConfig = {
   defaultNetwork: "hardhat",
   networks: {
     hardhat: {},
     testnet: CoreTestnet,
-    // mainnet: bscMainnet,
   },
   solidity: {
     compilers: [
