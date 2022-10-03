@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { ethers, network, run } from "hardhat";
 import config from "../config";
 
