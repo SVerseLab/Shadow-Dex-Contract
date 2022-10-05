@@ -1,15 +1,13 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.6.12;
-
-import "@openzeppelin/contracts/access/Ownable.sol";
-import "bsc-library/contracts/IBEP20.sol";
-
+pragma solidity 0.8.0;
 import "./SmartChefInitializable.sol";
+
+// File: contracts/SmartChefFactory.sol
 
 contract SmartChefFactory is Ownable {
     event NewSmartChefContract(address indexed smartChef);
 
-    constructor() public {
+    constructor() {
         //
     }
 
@@ -21,16 +19,18 @@ contract SmartChefFactory is Ownable {
      * @param _startBlock: start block
      * @param _endBlock: end block
      * @param _poolLimitPerUser: pool limit per user in stakedToken (if any, else 0)
+     * @param _numberBlocksForUserLimit: block numbers available for user limit (after start block)
      * @param _admin: admin address with ownership
      * @return address of new smart chef contract
      */
     function deployPool(
-        IBEP20 _stakedToken,
-        IBEP20 _rewardToken,
+        IERC20Metadata _stakedToken,
+        IERC20Metadata _rewardToken,
         uint256 _rewardPerBlock,
         uint256 _startBlock,
         uint256 _bonusEndBlock,
         uint256 _poolLimitPerUser,
+        uint256 _numberBlocksForUserLimit,
         address _admin
     ) external onlyOwner {
         require(_stakedToken.totalSupply() >= 0);
@@ -38,6 +38,7 @@ contract SmartChefFactory is Ownable {
         require(_stakedToken != _rewardToken, "Tokens must be be different");
 
         bytes memory bytecode = type(SmartChefInitializable).creationCode;
+        // pass constructor argument
         bytes32 salt = keccak256(abi.encodePacked(_stakedToken, _rewardToken, _startBlock));
         address smartChefAddress;
 
@@ -52,6 +53,7 @@ contract SmartChefFactory is Ownable {
             _startBlock,
             _bonusEndBlock,
             _poolLimitPerUser,
+            _numberBlocksForUserLimit,
             _admin
         );
 
